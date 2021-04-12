@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==3.1.1"
+
+[dev-packages]
+pytest = "*"
+pytest-cov = "*"
+pytest-html = "*"
+
+[requires]
+python_full_version = "3.8.5"
+
+[scripts]
+start		 = "python manage.py runserver"
+showmigrations	 = "python manage.py showmigrations"
+makemigrations	 = "python manage.py makemigrations"
+migrate		 = "python manage.py migrate"
+clean		 = "rm reports/ -rf"
+test		 = "bash -c \"pipenv run clean && pytest --html reports/test.html --self-contained-html --cov ploos/ --cov common/ --cov-report html:reports/coverage/ --cov-config coveragerc\""
+ci		 = "bash -c \"pipenv run clean && pytest --html reports/test.html --self-contained-html --cov ploos/ --cov common/ --cov-report html:reports/coverage/ --cov-config coveragerc\""
