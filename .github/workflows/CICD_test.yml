@@ -23,17 +23,11 @@ on:
          default: '開発'
 
 jobs:
-  provisionProd:
-    name: Provision Prod
-    runs-on: ubuntu-latest
-    environment:
-      name: STG
-      url: https://abel-node-gh-accelerator.azurewebsites.net
   
   build:
     runs-on: ubuntu-latest
 
-    steps:
+    steps:          
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
@@ -52,7 +46,14 @@ jobs:
         with:
           name: upload UnitTest result
           path: reports/test.html
-
+          
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: STG
+#       url: https://webapp-deploytest-1-staging.azurewebsites.net
+    needs: build
+    steps:
       - name: Deploy to EC2
         if: ${{ github.event.inputs.DeployBranch == '' }}
         env:
