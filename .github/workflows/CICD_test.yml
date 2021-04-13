@@ -23,6 +23,13 @@ on:
          default: '開発'
 
 jobs:
+  provisionProd:
+    name: Provision Prod
+    runs-on: ubuntu-latest
+    environment:
+      name: STG
+      url: https://abel-node-gh-accelerator.azurewebsites.net
+  
   build:
     runs-on: ubuntu-latest
 
