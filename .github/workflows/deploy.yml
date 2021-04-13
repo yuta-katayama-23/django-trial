@@ -15,7 +15,8 @@ on:
          required: true
          default: '開発'
 
-jobs:          
+jobs:
+  # https://blog.shibayan.jp/entry/20201217/1608190413
   deploy:
     runs-on: ubuntu-latest
     environment:
