@@ -31,3 +31,9 @@ jobs:
         
       - name: Run UnitTest
         run: pipenv run test
+        
+      - name: Archive UnitTest result
+        uses: actions/upload-artifact@v2
+        with:
+          name: upload UnitTest result
+          path: ///home/runner/work/django-trial/django-trial/reports/test.html
