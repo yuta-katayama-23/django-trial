@@ -6,7 +6,7 @@ name: pythonでのCI(pytest)とCD
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ '!master', '!develop', '!hotfix' ]
+    branches-ignore: [ master, develop, hotfix ]
   pull_request:
     branches: [ master ]
 
