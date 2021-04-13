@@ -60,7 +60,10 @@ jobs:
           EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY_DEV }}
           EC2_USER: ${{ secrets.EC2_USER }}
           EC2_HOST: ${{ secrets.EC2_HOST }}        
-        run: echo "$EC2_SSH_KEY" > ssh_secret_key && chmod 600 ssh_secret_key && ssh -oStrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} -i ssh_secret_key "cd /home/${EC2_USER}/django-trial && git pull origin ${{ github.event.inputs.DeployBranch }}"
+        run: |
+          echo "$EC2_SSH_KEY" > ssh_secret_key
+          chmod 600 ssh_secret_key
+          ssh -oStrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} -i ssh_secret_key "cd /home/${EC2_USER}/django-trial && git -c core.sshCommand="ssh -i ~/.ssh/deploy_key -F /dev/null" pull origin ${{ github.event.inputs.DeployBranch }}"
         
       - name: Deploy to EC2 of 'ステージング' by manually
         if: ${{ github.event.inputs.DeployBranch != '' && github.event.inputs.DeployEnv == 'ステージング' }}
