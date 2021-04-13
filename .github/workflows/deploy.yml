@@ -21,7 +21,7 @@ jobs:
     environment:
       name: STG
 #       url: 
-    needs: build
+#     needs: build
     steps:
       - name: Deploy to EC2
         if: ${{ github.event.inputs.DeployBranch == '' }}
