@@ -1,0 +1,39 @@
+# This is a basic workflow to help you get started with Actions
+
+name: pythonでのCI(pytest)とCD
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+  
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+
+    steps:          
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Install pipenv
+        run: pip install pipenv
+        
+      - name: Sync Pipfile.lock dev
+        run: pipenv sync --dev
+        
+      - name: Run UnitTest
+        run: pipenv run test
+
+      # https://docs.github.com/ja/actions/guides/storing-workflow-data-as-artifacts#uploading-build-and-test-artifacts
+      - name: Archive UnitTest result
+        uses: actions/upload-artifact@v2
+        with:
+          name: upload UnitTest result
+          path: reports/test.html
