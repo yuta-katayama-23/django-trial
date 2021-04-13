@@ -23,9 +23,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      # Install pipenv
       - name: Install pipenv
         run: pip install pipenv
+        
+      - name: Sync Pipfile.lock dev
+        run: pipenv sync --dev
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
