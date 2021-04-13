@@ -31,9 +31,10 @@ jobs:
         
       - name: Run UnitTest
         run: pipenv run test
-        
+
+      # https://docs.github.com/ja/actions/guides/storing-workflow-data-as-artifacts#uploading-build-and-test-artifacts
       - name: Archive UnitTest result
         uses: actions/upload-artifact@v2
         with:
           name: upload UnitTest result
-          path: ///home/runner/work/django-trial/django-trial/reports/test.html
+          path: reports/test.html
