@@ -1,0 +1,58 @@
+# This is a basic workflow to help you get started with Actions
+
+name: 承認付きDeploy
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+     inputs:
+       DeployBranch:
+         description: 'DeployBranch'     
+         required: true
+         default: 'main'
+       DeployEnv:
+         description: 'DeployEnv'     
+         required: true
+         default: '開発'
+
+jobs:
+  # https://blog.shibayan.jp/entry/20201217/1608190413
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.DeployEnv }}
+#       url: 
+#     needs: build
+    steps:       
+      - name: Deploy to EC2 of '開発'
+        if: ${{ github.event.inputs.DeployEnv == '開発' }}
+        env:
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY_DEV }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}        
+        run: |
+          echo "$EC2_SSH_KEY" > ssh_secret_key
+          chmod 600 ssh_secret_key
+          ssh -oStrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} -i ssh_secret_key "cd /home/${EC2_USER}/django-trial && git -c core.sshCommand=\"ssh -i ~/.ssh/deploy_key -F /dev/null\" pull origin ${{ github.event.inputs.DeployBranch }}"
+        
+      - name: Deploy to EC2 of 'ステージング'
+        if: ${{ github.event.inputs.DeployEnv == 'ステージング' }}
+        env:
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY_STG }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}        
+        run: |
+          echo "$EC2_SSH_KEY" > ssh_secret_key
+          chmod 600 ssh_secret_key
+          ssh -oStrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} -i ssh_secret_key "cd /home/${EC2_USER}/django-trial && git -c core.sshCommand=\"ssh -i ~/.ssh/deploy_key -F /dev/null\" pull origin ${{ github.event.inputs.DeployBranch }}"
+
+      - name: Deploy to EC2 of '本番'
+        if: ${{ github.event.inputs.DeployEnv == '本番' }}
+        env:
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY_PROD }}
+          EC2_USER: ${{ secrets.EC2_USER }}
+          EC2_HOST: ${{ secrets.EC2_HOST }}        
+        run: |
+          echo "$EC2_SSH_KEY" > ssh_secret_key
+          chmod 600 ssh_secret_key
+          ssh -oStrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} -i ssh_secret_key "cd /home/${EC2_USER}/django-trial && git -c core.sshCommand=\"ssh -i ~/.ssh/deploy_key -F /dev/null\" pull origin ${{ github.event.inputs.DeployBranch }}"
