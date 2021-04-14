@@ -46,6 +46,14 @@ jobs:
           chmod 600 ssh_secret_key
           ssh -oStrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} -i ssh_secret_key "cd /home/${EC2_USER}/django-trial && git -c core.sshCommand=\"ssh -i ~/.ssh/deploy_key -F /dev/null\" pull origin ${{ github.event.inputs.DeployBranch }}"
 
+      - name: Deploy to EC2 of 'ステージング' 権限なし
+        env:
+          CAN_DEPLOY: ${{ secrets.CAN_STG_DEPLOY_USER }}
+        if: ${{ github.event.inputs.DeployEnv == 'ステージング' && !contains(env.CAN_DEPLOY, github.event.sender.login) }}
+        run: |
+          echo "ステージングのdeployを行う権限がありません。"
+          exit 1      
+
       - name: Deploy to EC2 of '本番'
         env:
           EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY_PROD }}
