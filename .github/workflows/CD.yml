@@ -43,8 +43,8 @@ jobs:
         if: ( ${{ github.event.inputs.DeployEnv }} == 'ステージング' && contains(${CAN_DEPLOY}, ${{ github.event.id }}) )
         run: |
           printf ${{ github.event.inputs.DeployEnv }}
-          printf ${{ github.event.actor }}
-          printf "${{ github.event.actor.login }}"
+          printf ${{ github.event.action }}
+          printf "${{ github.event.sender.login }}"
           echo "$EC2_SSH_KEY" > ssh_secret_key
           chmod 600 ssh_secret_key
           ssh -oStrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} -i ssh_secret_key "cd /home/${EC2_USER}/django-trial && git -c core.sshCommand=\"ssh -i ~/.ssh/deploy_key -F /dev/null\" pull origin ${{ github.event.inputs.DeployBranch }}"
