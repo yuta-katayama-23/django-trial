@@ -32,8 +32,14 @@ jobs:
         run: pipenv run test
 
       # https://docs.github.com/ja/actions/guides/storing-workflow-data-as-artifacts#uploading-build-and-test-artifacts
-      - name: Archive UnitTest result
+      - name: Archive UnitTest result of test
         uses: actions/upload-artifact@v2
         with:
-          name: upload UnitTest result
+          name: upload UnitTest result of test
           path: reports/test.html
+    
+      - name: Archive UnitTest result of coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: upload UnitTest result of coverage
+          path: reports/coverage/
