@@ -13,6 +13,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 jobs:
   
   build:
@@ -39,3 +42,12 @@ jobs:
           path: |
             reports/test.html
             reports/coverage/
+            
+      # テスト成功時はこちらのステップが実行される
+      - name: Slack Notification on Success
+        if: success()
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+           SLACK_CHANNEL: cicdのテスト
+           SLACK_TITLE: Test Success
+           SLACK_COLOR: good
