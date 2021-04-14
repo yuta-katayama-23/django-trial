@@ -51,3 +51,4 @@ jobs:
            SLACK_CHANNEL: cicdのテスト
            SLACK_TITLE: Test Success
            SLACK_COLOR: good
+           SLACK_MESSAGE: 'Build Sucess!! :rocket:'
