@@ -40,7 +40,7 @@ jobs:
           EC2_USER: ${{ secrets.EC2_USER }}
           EC2_HOST: ${{ secrets.EC2_HOST }}
           CAN_DEPLOY: ${{ secrets.CAN_DEPLOY_USER }}
-        if: ${{ github.event.inputs.DeployEnv == 'ステージング' && contains('${CAN_DEPLOY}', 'aaa') }}
+        if: ${{ github.event.inputs.DeployEnv == 'ステージング' && contains(secrets.CAN_DEPLOY_USER, 'aaa') }}
         run: |
           echo "${{ github.event.actor.login }}"
           echo "$EC2_SSH_KEY" > ssh_secret_key
