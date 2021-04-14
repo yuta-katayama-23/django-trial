@@ -42,6 +42,8 @@ jobs:
           CAN_DEPLOY: ${{ secrets.CAN_DEPLOY_USER }}
         if: ${{ github.event.inputs.DeployEnv }} == 'ステージング' && contains(${CAN_DEPLOY}, ${{ github.event.id }})
         run: |
+          printf ${{ github.event.inputs.DeployEnv }}
+          printf ${{ github.event }}
           echo "${{ github.event.actor.login }}"
           echo "$EC2_SSH_KEY" > ssh_secret_key
           chmod 600 ssh_secret_key
