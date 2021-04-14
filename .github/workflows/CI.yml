@@ -33,15 +33,18 @@ jobs:
         
       - name: Run UnitTest
         run: pipenv run test
+        
+      - name: わざと失敗
+        run: exit 1
 
       # https://docs.github.com/ja/actions/guides/storing-workflow-data-as-artifacts#uploading-build-and-test-artifacts
-      - name: Archive UnitTest result of test
-        uses: actions/upload-artifact@v2
-        with:
-          name: upload UnitTest result of test
-          path: |
-            reports/test.html
-            reports/coverage/
+#       - name: Archive UnitTest result of test
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: upload UnitTest result of test
+#           path: |
+#             reports/test.html
+#             reports/coverage/
             
       # テスト成功時はこちらのステップが実行される
       - name: Slack Notification on Success
@@ -52,3 +55,13 @@ jobs:
            SLACK_TITLE: Test Success
            SLACK_COLOR: good
            SLACK_MESSAGE: 'Build Sucess!! :rocket:'
+           
+      # テスト失敗時はこちらのステップが実行される
+      - name: Slack Notification on Failure
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: failure()
+        env:
+          SLACK_CHANNEL: ci
+          SLACK_TITLE: Test Failure
+          SLACK_COLOR: danger
+          SLACK_MESSAGE: 'Build Failer!!'
