@@ -39,9 +39,3 @@ jobs:
           path: |
             reports/test.html
             reports/coverage/
-    
-#       - name: Archive UnitTest result of coverage
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: upload UnitTest result of coverage
-#           path: reports/coverage/
