@@ -58,7 +58,7 @@ jobs:
               color: "good",
               title: "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID",
               title_link: "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID",
-              text: "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+              text: "${{env.GITHUB_SERVER_URL}}/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
             }]
           }' | curl -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
            
