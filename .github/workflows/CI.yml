@@ -21,26 +21,23 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-#       - name: Install pipenv
-#         run: pip install pipenv
+      - name: Install pipenv
+        run: pip install pipenv
         
-#       - name: Sync Pipfile.lock dev
-#         run: pipenv sync --dev
+      - name: Sync Pipfile.lock dev
+        run: pipenv sync --dev
         
-#       - name: Run UnitTest
-#         run: pipenv run test
-        
-      - name: わざと失敗
-        run: exit 1
+      - name: Run UnitTest
+        run: pipenv run test
 
       # https://docs.github.com/ja/actions/guides/storing-workflow-data-as-artifacts#uploading-build-and-test-artifacts
-#       - name: Archive UnitTest result of test
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: upload UnitTest result of test
-#           path: |
-#             reports/test.html
-#             reports/coverage/
+      - name: Archive UnitTest result of test
+        uses: actions/upload-artifact@v2
+        with:
+          name: upload UnitTest result of test
+          path: |
+            reports/test.html
+            reports/coverage/
             
       # テスト成功時はこちらのステップが実行される
       - name: Slack Notification on Success
