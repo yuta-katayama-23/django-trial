@@ -21,26 +21,26 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
-      - name: Install pipenv
-        run: pip install pipenv
+#       - name: Install pipenv
+#         run: pip install pipenv
         
-      - name: Sync Pipfile.lock dev
-        run: pipenv sync --dev
+#       - name: Sync Pipfile.lock dev
+#         run: pipenv sync --dev
         
-      - name: Run UnitTest
-        run: pipenv run test
+#       - name: Run UnitTest
+#         run: pipenv run test
         
 #       - name: わざと失敗
 #         run: exit 1
 
       # https://docs.github.com/ja/actions/guides/storing-workflow-data-as-artifacts#uploading-build-and-test-artifacts
-      - name: Archive UnitTest result of test
-        uses: actions/upload-artifact@v2
-        with:
-          name: upload UnitTest result of test
-          path: |
-            reports/test.html
-            reports/coverage/
+#       - name: Archive UnitTest result of test
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: upload UnitTest result of test
+#           path: |
+#             reports/test.html
+#             reports/coverage/
             
       # テスト成功時はこちらのステップが実行される
       - name: Slack Notification on Success
@@ -50,8 +50,8 @@ jobs:
             attachments: [{
               pretext: "CI（pytest）が成功しました！",
               color: "good",
-              title: "title test",
-              title_link: "title test link"
+              title: "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}",
+              title_link: "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
             }]
           }' | curl -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
            
