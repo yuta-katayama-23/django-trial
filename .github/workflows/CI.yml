@@ -21,6 +21,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
+      - name: slack 通知テスト用
+        run: echo "hellow world!"
+      
 #       - name: Install pipenv
 #         run: pip install pipenv
         
