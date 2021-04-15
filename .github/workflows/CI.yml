@@ -54,7 +54,7 @@ jobs:
             attachments: [{
               pretext: "CI（pytest）の実行結果を通知します",
               color: "good",
-              title: "$jobLink",
+              title: $jobLink,
               title_link: "$jobLink",
               text: "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
             }]
