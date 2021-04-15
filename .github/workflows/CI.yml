@@ -12,12 +12,8 @@ on:
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-env:
-  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-jobs:
   
+jobs:  
   build:
     runs-on: ubuntu-latest
 
@@ -49,19 +45,37 @@ jobs:
       # テスト成功時はこちらのステップが実行される
       - name: Slack Notification on Success
         if: success()
-        uses: rtCamp/action-slack-notify@v2.0.2
-        env:
-           SLACK_CHANNEL: cicdのテスト
-           SLACK_TITLE: Test Success
-           SLACK_COLOR: good
-           SLACK_MESSAGE: 'Build Sucess!! :rocket:'
+#         uses: rtCamp/action-slack-notify@v2.0.2
+#         env:
+#            SLACK_CHANNEL: cicdのテスト
+#            SLACK_TITLE: Test Success
+#            SLACK_COLOR: good
+#            SLACK_MESSAGE: 'Build Sucess!! :rocket:'
+        run: |
+          jq -n '{
+            attachments: [{
+              pretext: "Swagger が更新されたよ！",
+              color: "good",
+              title: "title test",
+              title_link: "title test link"
+            }]
+          }' | curl -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
            
       # テスト失敗時はこちらのステップが実行される
       - name: Slack Notification on Failure
-        uses: rtCamp/action-slack-notify@v2.0.2
+#         uses: rtCamp/action-slack-notify@v2.0.2
         if: failure()
-        env:
-          SLACK_CHANNEL: ci
-          SLACK_TITLE: Test Failure
-          SLACK_COLOR: danger
-          SLACK_MESSAGE: 'Build Failer!!'
+#         env:
+#           SLACK_CHANNEL: ci
+#           SLACK_TITLE: Test Failure
+#           SLACK_COLOR: danger
+#           SLACK_MESSAGE: 'Build Failer!!'
+        run: |
+          jq -n '{
+            attachments: [{
+              pretext: "Swagger が更新されなかった！",
+              color: "danger",
+              title: "title test faliure",
+              title_link: "title test link faliure"
+            }]
+          }' | curl -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
