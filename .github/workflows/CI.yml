@@ -56,14 +56,7 @@ jobs:
               color: "good",
               title: $jobLink,
               title_link: $jobLink,
-              blocks: [{
-                type: "header",
-                text: {
-                  type: "plain_text",
-                  text: "New request",
-                  emoji: true
-                }
-              }]
+              text: "pytestの結果は上記リンクから確認してください"
             }]
           }' | curl -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
            
