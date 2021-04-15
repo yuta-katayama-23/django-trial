@@ -63,7 +63,7 @@ jobs:
       - name: Slack Notification on Failure
         if: failure()
         run: |
-          jq -n '{
+          jq '{
             attachments: [{
               pretext: "CI（pytest）が失敗しました！",
               color: "danger",
