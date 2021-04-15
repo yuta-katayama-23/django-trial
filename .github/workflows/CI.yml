@@ -55,7 +55,7 @@ jobs:
               pretext: "CI（pytest）の実行結果を通知します",
               color: "good",
               title: "title",
-              title_link: '$jobLink',
+              title_link: "$jobLink",
               text: "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
             }]
           }' | curl -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
