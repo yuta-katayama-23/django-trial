@@ -55,14 +55,6 @@ jobs:
               color: "good",
               title: "${{ github.event.pull_request.title }}",
               title_link: "${{ github.event.pull_request.html_url }}",
-              blocks: [{
-                type: "header",
-                text: {
-                  type: "plain_text",
-                  text: "New request",
-                  emoji: true
-                }
-              }]
             }]
           }' | curl -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
            
