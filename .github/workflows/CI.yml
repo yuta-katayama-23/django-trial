@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: slack 通知テスト用
-        run: echo ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+        run: echo "hello　${{env.GITHUB_SERVER_URL}}"
       
 #       - name: Install pipenv
 #         run: pip install pipenv
