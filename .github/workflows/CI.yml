@@ -51,11 +51,10 @@ jobs:
         run: |
           jq -n '{
             attachments: [{
-              mrkdwn_in: ["text"],
               pretext: "CI（pytest）の実行結果を通知します",
               color: "good",
               title: "ci job link",
-              title_link: "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+              title_link: "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}",
               text: "URL"
             }]
           }' | curl -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
