@@ -23,7 +23,7 @@ jobs:
       
       - name: fromJSON("[ 'test' ]")
         run: |
-           echo ${{fromJSON("['test', 'aaaa']")}}
+           echo ${{ fromJSON(secrets.JSON) }}
       
       - name: Install pipenv
         run: pip install pipenv
