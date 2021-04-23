@@ -24,7 +24,7 @@ jobs:
       - name: fromJSON("[ 'test' ]")
         run: |
           i=0
-          for e in ${{fromJSON(secrets.JSON)}}[@]; do
+          for e in ${{fromJSON(secrets.JSON)}}; do
             echo "array[$i] = ${e}"
             let i++
           done
