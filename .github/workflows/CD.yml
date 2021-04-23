@@ -24,7 +24,7 @@ jobs:
 #       url:
     steps:
       - name: Deploy of STG
-        if: ${{ github.event.inputs.DeployEnv == 'ステージング' && contains(fromJSON(secrets.STG_DEPLOY_USER), github.event.sender.login) }}
+        if: ${{ github.event.inputs.DeployEnv == 'ステージング' && contains(fromJSON('${{secrets.STG_DEPLOY_USER}}'), github.event.sender.login) }}
         run: |
           echo '${{ secrets.SSH_KEY }}' > ssh_secret_key
           chmod 600 ssh_secret_key
