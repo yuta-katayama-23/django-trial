@@ -22,7 +22,12 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: fromJSON("[ 'test' ]")
-        run: echo "${{ fromJSON(secrets.JSON) }}"
+        run: |
+          i=0
+          for e in ${{fromJSON(secrets.JSON)}}[@]; do
+            echo "array[$i] = ${e}"
+            let i++
+          done
       
       - name: Install pipenv
         run: pip install pipenv
