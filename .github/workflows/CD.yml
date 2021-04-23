@@ -36,7 +36,9 @@ jobs:
           "
 
       - name: 権限エラー（STG） 
-        if: ${{ github.event.inputs.DeployEnv == 'STG' && !contains(fromJSON(secrets.STG_DEPLOY_USER), github.event.sender.login) }}
+        if: ${{ github.event.inputs.DeployEnv == 'STG' && !contains(fromJSON(env.DEPLOY_USERS), github.event.sender.login) }}
+        env:
+          DEPLOY_USERS: ${{ secrets.STG_DEPLOY_USER }}
         run: |
           echo "STGのDeployを行う権限がありません。"
           exit 1
