@@ -32,7 +32,7 @@ jobs:
           chmod 600 ssh_secret_key
           ssh -o StrictHostKeyChecking=no '${{ secrets.USER }}'@'${{ secrets.HOST }}' -i ssh_secret_key "
             cd /home/'${{ secrets.USER }}'/django-trial/ && 
-            git -c core.sshCommand=\"ssh -i ~/.ssh/deploy_key -F /dev/null\" pull
+            git -c core.sshCommand=\"ssh -i ~/.ssh/id_ed25519 -F /dev/null\" pull
           "
 
       - name: 権限エラー（STG） 
