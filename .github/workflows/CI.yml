@@ -51,7 +51,7 @@ jobs:
               title_link: $jobLink,
               text: "pytestの結果は上記リンクから確認してください"
             }]
-          }' | curl -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
+          }' | curl -X POST -H 'Content-Type: application/json' -d @- ${{ secrets.SLACK_WEBHOOK_URL }}
            
       # テスト失敗時はこちらのステップが実行される
       - name: Slack Notification on Failure
