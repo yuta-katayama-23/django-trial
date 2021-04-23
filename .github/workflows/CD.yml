@@ -24,7 +24,7 @@ jobs:
 #       url:
     steps:
       - name: Deploy of STG
-        if: ${{ github.event.inputs.DeployEnv == 'stg' && contains(fromJSON(env.DEPLOY_USERS), github.event.sender.login) }}
+        if: ${{ github.event.inputs.DeployEnv == 'stg' && contains((env.DEPLOY_USERS), github.event.sender.login) }}
         env:
           DEPLOY_USERS: ${{ secrets.STG_DEPLOY_USER }}
         run: |
@@ -36,7 +36,7 @@ jobs:
           "
 
       - name: 権限エラー（STG） 
-        if: ${{ github.event.inputs.DeployEnv == 'stg' && !contains(fromJSON(env.DEPLOY_USERS), github.event.sender.login) }}
+        if: ${{ github.event.inputs.DeployEnv == 'stg' && !contains((env.DEPLOY_USERS), github.event.sender.login) }}
         env:
           DEPLOY_USERS: ${{ secrets.STG_DEPLOY_USER }}
         run: |
