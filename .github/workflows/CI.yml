@@ -34,7 +34,7 @@ jobs:
       - name: Archive UnitTest result of test
         uses: actions/upload-artifact@v2
         with:
-          name: upload UnitTest result of test
+          name: Unit Test Result
           path: |
             reports/test.html
             reports/coverage/
